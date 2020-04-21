@@ -3,12 +3,11 @@ package setting
 import (
 	"github.com/go-ini/ini"
 	"log"
-	"math/cmplx"
 	"time"
 )
 
 var (
-	Config *ini.File
+	Cfg *ini.File
 
 	RunMode string
 
@@ -26,22 +25,23 @@ var (
 
 func init()  {
 	var err error
-	Config, err := ini.Load("conf/app.ini")
+	Cfg, err := ini.Load("./conf/app.ini")
 	if err != nil {
 		log.Fatalf("Fail to parse 'conf/app.ini': %v", err)
 	}
 
-	LoadBase()
-	LoadServe()
-	LoadApp()
+
+	LoadBase(Cfg)
+	LoadServe(Cfg)
+	LoadApp(Cfg)
 }
 
-func LoadBase()  {
-	RunMode = Config.Section("").Key("RUN_MODE").MustString("debug")
+func LoadBase(Cfg *ini.File)  {
+	RunMode = Cfg.Section("").Key("RUN_MODE").MustString("debug")
 }
 
-func LoadServe()  {
-	serve, err := Config.GetSection("serve")
+func LoadServe(Cfg *ini.File)  {
+	serve, err := Cfg.GetSection("server")
 	if err != nil {
 		log.Fatalf("Fail to get section 'server': %v", err)
 	}
@@ -51,8 +51,8 @@ func LoadServe()  {
 	WriteTimeout = time.Duration(serve.Key("WRITE_TIMEOUT").MustInt(60)) * time.Second
 }
 
-func LoadApp()  {
-	app, err := Config.GetSection("app")
+func LoadApp(Cfg *ini.File)  {
+	app, err := Cfg.GetSection("app")
 	if err != nil {
 		log.Fatalf("Fail to get section 'app': %v", err)
 	}
