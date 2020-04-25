@@ -2,17 +2,14 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/locales"
 	"go-gin-blog-api/orm"
 	"go-gin-blog-api/routers"
 )
 
-var trans locales.Translator
-
 func main() {
 	// 数据库连接
 	err := orm.InitMySQL()
-	if err!= nil{
+	if err != nil {
 		panic(err)
 	}
 	defer orm.Close()
