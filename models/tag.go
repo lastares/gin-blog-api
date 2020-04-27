@@ -8,10 +8,11 @@ import (
 	"os"
 )
 
+// Tag example
 type Tag struct {
-	ID        int           `json:"id" uri:"id" gorm:"primary_key;AUTO_INCREMENT" label:"主键" validate:"required,gt=0"`
-	TagName   string        `valid:"email" json:"tagName" gorm:"type:varchar(32);not null;default:\"\""`
-	TagStatus int           `json:"tagStatus" gorm:"type:tinyint(4);not null;default:1"`
+	ID        int           `json:"id" uri:"id" gorm:"primary_key;AUTO_INCREMENT" label:"主键" validate:"required,gt=0" example:"id \"1\""`
+	TagName   string        `valid:"email" json:"tagName" gorm:"type:varchar(32);not null;default:\"\"" example:"tagName php"`
+	TagStatus int           `json:"tagStatus" gorm:"type:tinyint(4);not null;default:1" example:"tagStatus 10"`
 	CreatedAt util.JSONTime `json:"createdAt" gorm:"type:datetime;null"`
 	UpdatedAt util.JSONTime `json:"UpdatedAt" gorm:"type:datetime;null"`
 }

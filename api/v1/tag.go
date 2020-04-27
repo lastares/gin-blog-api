@@ -12,8 +12,14 @@ import (
 type Meta struct {
 	Total int
 }
-//#0.0.0.0 account.jetbrains.com
-//#0.0.0.0 www.jetbrains.com
+
+// @Summary 获取标签列表
+// @Tags Tag
+// @Produce  json
+// @Success 200 {object} models.Tag
+// @Router /tags [post]
+// @Param page formData int false "page"
+// @Param pageSize formData int false "pageSize"
 // 获取文章标签
 func GetTags(c *gin.Context)  {
 	// 获取标签列表query参数

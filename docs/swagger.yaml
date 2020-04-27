@@ -1,0 +1,35 @@
+basePath: /v1/api/
+definitions:
+  gin.H:
+    additionalProperties: true
+    type: object
+host: 127.0.0.1:8002
+info:
+  contact: {}
+  description: gin swagger test.
+  license: {}
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /tags:
+    post:
+      parameters:
+      - description: page
+        in: formData
+        name: page
+        type: integer
+      - description: pageSize
+        in: formData
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'code": http.StatusOK, "data": map[string]interface{}}'
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: 获取标签列表
+      tags:
+      - Tag
+swagger: "2.0"
