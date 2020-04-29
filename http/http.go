@@ -21,3 +21,17 @@ func Translate(errorMessage string) string {
 	return statusText[errorMessage]
 }
 
+type Success struct {
+	Code int `json:"code" example:"200"`
+	Data interface{}      `json:"data"`
+}
+
+type Ok struct {
+	Code int `json:"code" example:"200"`
+}
+
+type Failed struct {
+	Code int `json:"code" example:"-1"`
+	Msg string `json:"msg" example:"failed"`
+}
+

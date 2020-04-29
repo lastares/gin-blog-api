@@ -1,14 +1,13 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "gin swagger test.",
-        "title": "Swagger Example API",
+        "description": "博客接口文档",
+        "title": "博客接口文档",
         "contact": {},
         "license": {},
         "version": "1.0"
     },
-    "host": "127.0.0.1:8002",
-    "basePath": "/v1/api/",
+    "basePath": "/api/v1/",
     "paths": {
         "/tags": {
             "post": {
@@ -22,22 +21,28 @@
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "page",
+                        "description": "当前页码",
                         "name": "page",
                         "in": "formData"
                     },
                     {
                         "type": "integer",
-                        "description": "pageSize",
+                        "description": "每页显示条数",
                         "name": "pageSize",
                         "in": "formData"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "code\": http.StatusOK, \"data\": map[string]interface{}}",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/gin.H"
+                            "$ref": "#/definitions/models.Tag"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/http.Failed"
                         }
                     }
                 }
@@ -45,9 +50,49 @@
         }
     },
     "definitions": {
-        "gin.H": {
+        "http.Failed": {
             "type": "object",
-            "additionalProperties": true
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": -1
+                },
+                "msg": {
+                    "type": "string",
+                    "example": "failed"
+                }
+            }
+        },
+        "models.Tag": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "createdAt": {
+                    "type": "object",
+                    "$ref": "#/definitions/util.JSONTime"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "tagName": {
+                    "type": "string",
+                    "example": "php"
+                },
+                "tagStatus": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "updatedAt": {
+                    "type": "object",
+                    "$ref": "#/definitions/util.JSONTime"
+                }
+            }
+        },
+        "util.JSONTime": {
+            "type": "object"
         }
     }
 }

@@ -23,6 +23,7 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/mitchellh/mapstructure v1.2.2 // indirect
 	github.com/pelletier/go-toml v1.7.0 // indirect
+	github.com/robfig/cron v1.2.0
 	github.com/spf13/viper v1.6.3 // indirect
 	github.com/swaggo/swag v1.6.5
 	github.com/unknwon/com v1.0.1

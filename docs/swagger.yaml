@@ -1,24 +1,51 @@
-basePath: /v1/api/
+basePath: /api/v1/
 definitions:
-  gin.H:
-    additionalProperties: true
+  http.Failed:
+    properties:
+      code:
+        example: -1
+        type: integer
+      msg:
+        example: failed
+        type: string
     type: object
-host: 127.0.0.1:8002
+  models.Tag:
+    properties:
+      createdAt:
+        $ref: '#/definitions/util.JSONTime'
+        type: object
+      id:
+        example: 10
+        type: integer
+      tagName:
+        example: php
+        type: string
+      tagStatus:
+        example: 10
+        type: integer
+      updatedAt:
+        $ref: '#/definitions/util.JSONTime'
+        type: object
+    required:
+    - id
+    type: object
+  util.JSONTime:
+    type: object
 info:
   contact: {}
-  description: gin swagger test.
+  description: 博客接口文档
   license: {}
-  title: Swagger Example API
+  title: 博客接口文档
   version: "1.0"
 paths:
   /tags:
     post:
       parameters:
-      - description: page
+      - description: 当前页码
         in: formData
         name: page
         type: integer
-      - description: pageSize
+      - description: 每页显示条数
         in: formData
         name: pageSize
         type: integer
@@ -26,9 +53,13 @@ paths:
       - application/json
       responses:
         "200":
-          description: 'code": http.StatusOK, "data": map[string]interface{}}'
+          description: OK
           schema:
-            $ref: '#/definitions/gin.H'
+            $ref: '#/definitions/models.Tag'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.Failed'
       summary: 获取标签列表
       tags:
       - Tag

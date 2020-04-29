@@ -16,11 +16,11 @@ type Meta struct {
 // @Summary 获取标签列表
 // @Tags Tag
 // @Produce  json
-// @Success 200 {object} models.Tag
 // @Router /tags [post]
-// @Param page formData int false "page"
-// @Param pageSize formData int false "pageSize"
-// 获取文章标签
+// @Param page formData int false "当前页码"
+// @Param pageSize formData int false "每页显示条数"
+// @Success 200 {object} models.Tag
+// @Failure 500 {object} http.Failed
 func GetTags(c *gin.Context)  {
 	// 获取标签列表query参数
 	tagName := strings.ToLower(c.DefaultQuery("name", ""))
@@ -34,10 +34,7 @@ func GetTags(c *gin.Context)  {
 	data["meta"] = Meta{count}
 
 	// 返回标签列表json数据
-	c.JSON(http.StatusOK, gin.H{
-		"code": http.StatusOK,
-		"data": data,
-	})
+	c.JSON(http.StatusOK, http2.Success{http.StatusOK, data})
 }
 
 // 添加文章标签
@@ -45,9 +42,7 @@ func AddTag(c *gin.Context)  {
 	tagName := c.PostForm("tagName")
 	tagStatus := com.StrTo(c.PostForm("tagStatus")).MustInt()
 	models.AddTag(tagName, tagStatus)
-	c.JSON(http.StatusOK, gin.H{
-		"code": http.StatusOK,
-	})
+	c.JSON(http.StatusOK, http2.Ok{http.StatusOK})
 }
 
 // 编辑文章标签
@@ -63,10 +58,7 @@ func UpdateTag(c *gin.Context)  {
 	data["tagStatus"] = tagStatus
 	// 更新
 	models.UpdateTag(tagId, data)
-
-	c.JSON(http.StatusOK, gin.H{
-		"code": http.StatusOK,
-	})
+	c.JSON(http.StatusOK, http2.Ok{http.StatusOK})
 }
 
 // 删除标签
