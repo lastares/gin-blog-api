@@ -1,16 +1,18 @@
 package models
 
-import "go-gin-blog-api/orm"
+import (
+	"go-gin-blog-api/global"
+)
 
 type Auth struct {
-	ID int `gorm:"primary_key" json:"id"`
+	ID       int    `gorm:"primary_key" json:"id"`
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
 func CheckAuth(username, password string) bool {
 	var auth Auth
-	orm.DB.Select("id").Where(Auth{Username : username, Password : password}).First(&auth)
+	global.DB.Select("id").Where(Auth{Username: username, Password: password}).First(&auth)
 	if auth.ID > 0 {
 		return true
 	}

@@ -21,9 +21,9 @@ func GenerateToken(username, password string) (string, error) {
 	claims := Claims{
 		username,
 		password,
-		jwt.StandardClaims {
-			ExpiresAt : expireTime.Unix(),
-			Issuer : "gin-blog",
+		jwt.StandardClaims{
+			ExpiresAt: expireTime.Unix(),
+			Issuer:    "gin-blog",
 		},
 	}
 

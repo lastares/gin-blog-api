@@ -2,10 +2,10 @@ package jwt
 
 import (
 	"github.com/gin-gonic/gin"
+	http2 "go-gin-blog-api/http"
 	"go-gin-blog-api/util"
 	"net/http"
 	"time"
-	http2 "go-gin-blog-api/http"
 )
 
 func JWT() gin.HandlerFunc {
@@ -18,7 +18,7 @@ func JWT() gin.HandlerFunc {
 			claims, err := util.ParseToken(token)
 			if err != nil {
 				translateId = "Token check failed."
-			} else if time.Now().Unix() > claims.ExpiresAt {// Token expired.
+			} else if time.Now().Unix() > claims.ExpiresAt { // Token expired.
 				translateId = "Access token failed."
 
 			}

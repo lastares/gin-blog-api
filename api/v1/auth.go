@@ -3,9 +3,9 @@ package v1
 import (
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
+	http2 "go-gin-blog-api/http"
 	"go-gin-blog-api/models"
 	"go-gin-blog-api/util"
-	http2 "go-gin-blog-api/http"
 	"log"
 	"net/http"
 )
@@ -45,7 +45,7 @@ func GetAuth(c *gin.Context) {
 		}
 	}
 
-	if (translateId != "ok") {
+	if translateId != "ok" {
 		c.JSON(http.StatusOK, http2.Failed{http2.ErrorCode, http2.Translate(translateId)})
 		return
 	}

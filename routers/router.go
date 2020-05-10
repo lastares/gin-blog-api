@@ -2,6 +2,8 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"go-gin-blog-api/api/v1"
 	"go-gin-blog-api/middleware/jwt"
 	"net/http"
@@ -24,5 +26,6 @@ func InitRouter(engine *gin.Engine) *gin.Engine {
 		apiV1.DELETE("/tag/:id", v1.DeleteTag)
 
 	}
+	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	return engine
 }

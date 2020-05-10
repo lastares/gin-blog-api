@@ -21,13 +21,12 @@ type Meta struct {
 // @Param pageSize formData int false "每页显示条数"
 // @Success 200 {object} models.Tag
 // @Failure 500 {object} http.Failed
-func GetTags(c *gin.Context)  {
+func GetTags(c *gin.Context) {
 	// 获取标签列表query参数
 	tagName := strings.ToLower(c.DefaultQuery("name", ""))
 	page := com.StrTo(c.DefaultQuery("page", "1")).MustInt()
 	tagStatus := com.StrTo(c.DefaultQuery("tagStatus", "1")).MustInt()
 	data := make(map[string]interface{})
-
 
 	var count int
 	data["list"], count = models.GetTags(page, tagName, tagStatus)
@@ -38,7 +37,7 @@ func GetTags(c *gin.Context)  {
 }
 
 // 添加文章标签
-func AddTag(c *gin.Context)  {
+func AddTag(c *gin.Context) {
 	tagName := c.PostForm("tagName")
 	tagStatus := com.StrTo(c.PostForm("tagStatus")).MustInt()
 	models.AddTag(tagName, tagStatus)
@@ -46,7 +45,7 @@ func AddTag(c *gin.Context)  {
 }
 
 // 编辑文章标签
-func UpdateTag(c *gin.Context)  {
+func UpdateTag(c *gin.Context) {
 	// 接受参数
 	tagId := com.StrTo(c.PostForm("tagId")).MustInt()
 	tagName := c.PostForm("tagName")
@@ -78,4 +77,3 @@ func DeleteTag(c *gin.Context) {
 		"code": http.StatusOK,
 	})
 }
-

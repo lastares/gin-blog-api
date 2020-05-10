@@ -3,18 +3,18 @@ package models
 import (
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/unknwon/com"
-	"go-gin-blog-api/orm"
+	"go-gin-blog-api/global"
 	"go-gin-blog-api/util"
 	"os"
 )
 
 // Tag example
 type Tag struct {
-	ID        int           `json:"id" uri:"id" gorm:"primary_key;AUTO_INCREMENT" label:"主键" validate:"required,gt=0" example:"10"`
-	TagName   string        `valid:"email" json:"tagName" gorm:"type:varchar(32);not null;default:\"\"" example:"php"`
-	TagStatus int           `json:"tagStatus" gorm:"type:tinyint(4);not null;default:1" example:"10"`
-	CreatedAt util.JSONTime `json:"createdAt" gorm:"type:datetime;null"`
-	UpdatedAt util.JSONTime `json:"updatedAt" gorm:"type:datetime;null"`
+	ID        int           `json:"id" uri:"id" gglobal:"primary_key;AUTO_INCREMENT" label:"主键" validate:"required,gt=0" example:"10"`
+	TagName   string        `valid:"email" json:"tagName" gglobal:"type:varchar(32);not null;default:\"\"" example:"php"`
+	TagStatus int           `json:"tagStatus" gglobal:"type:tinyint(4);not null;default:1" example:"10"`
+	CreatedAt util.JSONTime `json:"createdAt" gglobal:"type:datetime;null"`
+	UpdatedAt util.JSONTime `json:"updatedAt" gglobal:"type:datetime;null"`
 }
 
 //func (tag *Tag) GetValidateError(name string) string {
@@ -30,12 +30,12 @@ type Tag struct {
 //}
 
 func GetTags(page int, tagName string, tagStatus int) (tags []Tag, count int) {
-	query := orm.DB.Where("tag_status = ?", tagStatus)
+	query := global.DB.Where("tag_status = ?", tagStatus)
 	pageSize := com.StrTo(os.Getenv("PAGESIZE")).MustInt()
 	offset := (page - 1) * pageSize
 
 	// 搜索
-	if (tagName != "") {
+	if tagName != "" {
 		query = query.Where("name like ?", "%"+tagName+"%")
 	}
 
@@ -51,7 +51,7 @@ func GetTags(page int, tagName string, tagStatus int) (tags []Tag, count int) {
 }
 
 func AddTag(tagName string, tagStatus int) bool {
-	orm.DB.Create(&Tag{
+	global.DB.Create(&Tag{
 		TagName:   tagName,
 		TagStatus: tagStatus,
 	})
@@ -59,11 +59,11 @@ func AddTag(tagName string, tagStatus int) bool {
 }
 
 func UpdateTag(tagId int, tag map[string]interface{}) {
-	orm.DB.Model(&Tag{}).Where("id = ?", tagId).Updates(tag)
+	global.DB.Model(&Tag{}).Where("id = ?", tagId).Updates(tag)
 }
 
 func Get(tagId int) bool {
-	err := orm.DB.First(&Tag{}, tagId).Error
+	err := global.DB.First(&Tag{}, tagId).Error
 	if err != nil {
 		return false
 	}
@@ -72,7 +72,7 @@ func Get(tagId int) bool {
 }
 
 func DeleteTag(tagId int) bool {
-	err := orm.DB.Where("id = ?", tagId).Delete(&Tag{}).Error
+	err := global.DB.Where("id = ?", tagId).Delete(&Tag{}).Error
 	if err != nil {
 		return false
 	}

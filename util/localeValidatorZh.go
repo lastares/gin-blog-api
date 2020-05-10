@@ -4,9 +4,9 @@ import (
 	zhongwen "github.com/go-playground/locales/zh"
 	"github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
+	zh_translations "github.com/go-playground/validator/v10/translations/zh"
 	"reflect"
 	"strings"
-	zh_translations "github.com/go-playground/validator/v10/translations/zh"
 )
 
 var Validate *validator.Validate
@@ -31,7 +31,7 @@ func Translate(errs validator.ValidationErrors) string {
 	var errList []string
 	for _, e := range errs {
 		// can translate each error one at a time.
-		errList = append(errList,e.Translate(trans))
+		errList = append(errList, e.Translate(trans))
 	}
-	return strings.Join(errList,"|")
+	return strings.Join(errList, "|")
 }

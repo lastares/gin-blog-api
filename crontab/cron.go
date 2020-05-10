@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func CronLaunch()  {
+func CronLaunch() {
 	log.Println("Starting......")
 
 	c := cron.New()
@@ -16,11 +16,11 @@ func CronLaunch()  {
 		fmt.Println("定时任务进行中")
 	})
 
- 	c.Start()
+	c.Start()
 
 	t1 := time.NewTimer(time.Second * 10)
 
-	for  {
+	for {
 		select {
 		case <-t1.C:
 			t1.Reset(time.Second * 10)

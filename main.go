@@ -1,15 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
-	"go-gin-blog-api/crontab"
 	_ "go-gin-blog-api/docs"
-	"go-gin-blog-api/orm"
-	"go-gin-blog-api/routers"
+	"go-gin-blog-api/initialize"
 )
-
 
 // @title 博客接口文档
 // @version 1.0
@@ -17,28 +11,11 @@ import (
 // @BasePath /api/v1/
 
 func main() {
-	crontab.CronLaunch()
+	//crontab.CronLaunch()
+	// 初始化数据库连接
+	initialize.MySQL()
+	defer initialize.MysqlClose() // 延迟关闭数据库连接
 
-	// 数据库连接
-	err := orm.InitMySQL()
-	if err != nil {
-		panic(err)
-	}
-	defer orm.Close()
-
-	// 实例化gin
-	engine := gin.Default()
-
-	//config := &ginSwagger.Config{
-	//	URL: "http://localhost:8002/swagger/doc.json",
-	//}
-	//use ginSwagger middleware to
-	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-	// 设置gin的运行模式
-	gin.SetMode(gin.DebugMode)
-	// 加载路由
-	routers.InitRouter(engine)
-	// 运行服务
-	engine.Run(":8002")
+	// 初始化Gin实例
+	initialize.Gin()
 }
