@@ -4,17 +4,14 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/unknwon/com"
 	"go-gin-blog-api/global"
-	"go-gin-blog-api/util"
 	"os"
 )
 
 // Tag example
 type Tag struct {
-	ID        int           `json:"id" uri:"id" gglobal:"primary_key;AUTO_INCREMENT" label:"主键" validate:"required,gt=0" example:"10"`
-	TagName   string        `valid:"email" json:"tagName" gglobal:"type:varchar(32);not null;default:\"\"" example:"php"`
-	TagStatus int           `json:"tagStatus" gglobal:"type:tinyint(4);not null;default:1" example:"10"`
-	CreatedAt util.JSONTime `json:"createdAt" gglobal:"type:datetime;null"`
-	UpdatedAt util.JSONTime `json:"updatedAt" gglobal:"type:datetime;null"`
+	Model
+	TagName   string `json:"tagName" validate:"required" label:"标签名称"`
+	TagStatus int    `json:"tagStatus" validate:"required,min=1" label:"标签状态"`
 }
 
 //func (tag *Tag) GetValidateError(name string) string {

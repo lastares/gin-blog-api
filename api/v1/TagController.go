@@ -2,7 +2,9 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"github.com/unknwon/com"
+	"go-gin-blog-api/global"
 	http2 "go-gin-blog-api/http"
 	"go-gin-blog-api/models"
 	"net/http"
@@ -38,9 +40,17 @@ func GetTags(c *gin.Context) {
 
 // 添加文章标签
 func AddTag(c *gin.Context) {
-	tagName := c.PostForm("tagName")
-	tagStatus := com.StrTo(c.PostForm("tagStatus")).MustInt()
-	models.AddTag(tagName, tagStatus)
+	var tag models.Tag
+	c.BindJSON(&tag)
+	err := global.Validate.Struct(tag)
+	if err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			c.JSON(http.StatusOK, http2.Failed{http2.ErrorCode, err.Translate(global.Translator)})
+			return
+		}
+	}
+
+	models.AddTag(tag.TagName, tag.TagStatus)
 	c.JSON(http.StatusOK, http2.Ok{http.StatusOK})
 }
 

@@ -19,6 +19,8 @@ func Gin() {
 	// 加载路由
 	routers.InitRouter(global.Gin)
 
+	Validate()
+
 	// 运行服务
 	// global.Gin.Run(":8002") // gin原始服务
 	// 使用fvbock/endless来替换默认的ListenAndServe进行优雅重启
