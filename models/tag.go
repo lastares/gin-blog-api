@@ -11,7 +11,7 @@ import (
 type Tag struct {
 	Model
 	TagName   string `json:"tagName" validate:"required" label:"标签名称"`
-	TagStatus int    `json:"tagStatus" validate:"required,min=1" label:"标签状态"`
+	TagStatus int    `json:"tagStatus" validate:"required, oneof=10 20" label:"标签状态"`
 }
 
 //func (tag *Tag) GetValidateError(name string) string {
