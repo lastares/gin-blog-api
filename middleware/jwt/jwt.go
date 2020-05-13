@@ -2,7 +2,7 @@ package jwt
 
 import (
 	"github.com/gin-gonic/gin"
-	http2 "go-gin-blog-api/http"
+	http2 "go-gin-blog-api/response"
 	"go-gin-blog-api/util"
 	"net/http"
 	"time"

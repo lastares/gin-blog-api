@@ -28,3 +28,4 @@ func Validate() {
 	zh_translations.RegisterDefaultTranslations(global.Validate, translator)
 	global.Translator = translator
 }
+

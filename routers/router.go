@@ -19,10 +19,10 @@ func InitRouter(engine *gin.Engine) *gin.Engine {
 	apiV1 := engine.Group("/api/v1")
 	apiV1.Use()
 	{
-		apiV1.GET("/tags", v1.GetTags)
-		apiV1.POST("/tag/create", v1.AddTag)
-		apiV1.POST("/tag/update", v1.UpdateTag)
-		apiV1.DELETE("/tag/:id", v1.DeleteTag)
+		//apiV1.GET("/tags", v1.GetTags)
+		apiV1.POST("/tag/create", v1.CreateTag)
+		//apiV1.POST("/tag/update", v1.Update)
+		//apiV1.DELETE("/tag/:id", v1.DeleteTag)
 
 	}
 	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

@@ -11,7 +11,7 @@ import (
 type Tag struct {
 	Model
 	TagName   string `json:"tagName" validate:"required" label:"标签名称"`
-	TagStatus int    `json:"tagStatus" validate:"required, oneof=10 20" label:"标签状态"`
+	TagStatus int    `json:"tagStatus" validate:"required,oneof=10 20" label:"标签状态"`
 }
 
 //func (tag *Tag) GetValidateError(name string) string {
@@ -55,12 +55,15 @@ func AddTag(tagName string, tagStatus int) bool {
 	return true
 }
 
-func UpdateTag(tagId int, tag map[string]interface{}) {
-	global.DB.Model(&Tag{}).Where("id = ?", tagId).Updates(tag)
+func UpdateTag(tag Tag) bool {
+	if global.DB.Save(tag).Error != nil {
+		return false
+	}
+	return true
 }
 
-func Get(tagId int) bool {
-	err := global.DB.First(&Tag{}, tagId).Error
+func GetTagById(tag Tag) bool {
+	err := global.DB.First(&tag).Error
 	if err != nil {
 		return false
 	}
