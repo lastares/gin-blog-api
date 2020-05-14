@@ -10,10 +10,6 @@ import (
 	"net/http"
 )
 
-type Meta struct {
-	Total int
-}
-
 // @Summary 获取标签列表
 // @Tags Tag
 // @Produce  json
@@ -22,23 +18,26 @@ type Meta struct {
 // @Param pageSize formData int false "每页显示条数"
 // @Success 200 {object} models.Tag
 // @Failure 500 {object} http.Failed
-//func GetTags(c *gin.Context) {
-//	// 获取标签列表query参数
-//	tagName := strings.ToLower(c.DefaultQuery("name", ""))
-//	page := com.StrTo(c.DefaultQuery("page", "1")).MustInt()
-//	tagStatus := com.StrTo(c.DefaultQuery("tagStatus", "1")).MustInt()
-//	data := make(map[string]interface{})
-//
-//	var count int
-//	data["list"], count = models.GetTags(page, tagName, tagStatus)
-//	data["meta"] = Meta{count}
-//
-//	// 返回标签列表json数据
-//	c.JSON(http.StatusOK, http2.Success{http.StatusOK, data})
-//}
+func GetTags(c *gin.Context) {
+	var tagList request.TagListForm
+	c.BindJSON(&tagList)
+	err := global.Validate.Struct(tagList)
+	if err != nil {
+		form_request.ValidFailed(c, err)
+		return
+	}
+
+	tags := service.Tag.TagList(
+		tagList.Page,
+		tagList.PageSize,
+		tagList.TagName,
+	)
+	// todo 总数待写
+	response.ResponseSuccessJson(c, tags, 100)
+}
 
 // 添加文章标签
-func CreateTag(c *gin.Context) {
+func TagCreate(c *gin.Context) {
 	var tag request.TagCreateModel
 	c.BindJSON(&tag)
 	err := global.Validate.Struct(tag)
@@ -55,53 +54,45 @@ func CreateTag(c *gin.Context) {
 }
 
 // 编辑文章标签
-//func Update(c *gin.Context) {
-//	// 字段校验
-//	var tag models.Tag
-//	c.BindJSON(&tag)
-//	err := global.Validate.Struct(tag)
-//	if err != nil {
-//		for _, err := range err.(validator.ValidationErrors) {
-//			c.JSON(http.StatusOK, http2.Failed{http2.ErrorCode, err.Translate(global.Translator)})
-//			return
-//		}
-//	}
+func TagUpdate(c *gin.Context) {
+	// 字段校验
+	var tag request.TagUpdateModel
+	c.BindJSON(&tag)
+	err := global.Validate.Struct(tag)
+	if err != nil {
+		form_request.ValidFailed(c, err)
+		return
+	}
 
-	//tagService.(tag)
-	// 判断标签是否存在
-	//if models.GetTagById(tag) == false {
-	//	c.JSON(http.StatusOK, http2.Failed{
-	//		http2.ErrorCode,
-	//		http2.Translate("The tag tag not found."),
-	//	})
-	//	return
-	//}
-	//
-	//// 更新标签
-	//if models.UpdateTag(tag) == false {
-	//	c.JSON(http.StatusOK, http2.Failed{
-	//		http2.ErrorCode,
-	//		http2.Translate("Updated failed."),
-	//	})
-	//	return
-	//}
-	//c.JSON(http.StatusOK, http2.Ok{http.StatusOK})
-//}
+	// 更新
+	errorCode := service.Tag.Update(
+		tag.Id,
+		tag.TagStatus,
+		tag.TagName,
+	)
+	if errorCode != response.Ok {
+		response.InvalidOperation(c, errorCode)
+		return
+	}
+	response.Success(c)
+}
 
 // 删除标签
-//func DeleteTag(c *gin.Context) {
-//	tagId := com.StrTo(c.Param("id")).MustInt()
-//	if !models.Get(tagId) {
-//		c.JSON(http.StatusOK, http2.Failed{http2.ErrorCode, http2.Translate("Tag does not exist.")})
-//		return
-//	}
-//
-//	if !models.DeleteTag(tagId) {
-//		c.JSON(http.StatusOK, http2.Failed{http2.ErrorCode, http2.Translate("Deleted failed.")})
-//		return
-//	}
-//
-//	c.JSON(http.StatusOK, gin.H{
-//		"code": http.StatusOK,
-//	})
-//}
+func TagDelete(c *gin.Context) {
+	// 字段校验
+	var tag request.TagDeleteModel
+	c.BindJSON(&tag)
+	err := global.Validate.Struct(tag)
+	if err != nil {
+		form_request.ValidFailed(c, err)
+		return
+	}
+
+	// 删除
+	errorCode := service.Tag.Delete(tag.Id)
+	if errorCode != response.Ok {
+		response.InvalidOperation(c, errorCode)
+		return
+	}
+	response.Success(c)
+}

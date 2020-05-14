@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-func ResponseSuccessJson(c *gin.Context, data interface{})  {
-	c.JSON(http.StatusOK, ResponseJson{Ok, data})
+func ResponseSuccessJson(c *gin.Context, data interface{}, total int)  {
+	c.JSON(http.StatusOK, ResponseJson{Ok, data, Meta{total}})
 }
 
 func Success(c *gin.Context)  {

@@ -6,8 +6,7 @@ import (
 	"strings"
 )
 
-func MD5(key string) string {
-
+func Md5(key string) string {
 	for i := 0; i < 2; i++ {
 		hash := md5.New()
 		hash.Write([]byte(key))

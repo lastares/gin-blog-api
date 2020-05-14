@@ -15,14 +15,14 @@ func InitRouter(engine *gin.Engine) *gin.Engine {
 		})
 	})
 
-	engine.GET("/auth", v1.GetAuth)
+	//engine.GET("/auth", v1.GetAuth)
 	apiV1 := engine.Group("/api/v1")
 	apiV1.Use()
 	{
-		//apiV1.GET("/tags", v1.GetTags)
-		apiV1.POST("/tag/create", v1.CreateTag)
-		//apiV1.POST("/tag/update", v1.Update)
-		//apiV1.DELETE("/tag/:id", v1.DeleteTag)
+		apiV1.POST("/tag/list", v1.GetTags)
+		apiV1.POST("/tag/create", v1.TagCreate)
+		apiV1.POST("/tag/update", v1.TagUpdate)
+		apiV1.POST("/tag/delete", v1.TagDelete)
 
 	}
 	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
