@@ -3,6 +3,7 @@ package repository
 import (
 	"go-gin-blog-api/global"
 	"go-gin-blog-api/models"
+	"go-gin-blog-api/models/const_type"
 )
 
 var Tag = newTagRepository()
@@ -34,24 +35,20 @@ func (t *tagRepository) Delete(id int) error {
 	return global.DB.Where("id = ?", id).Delete(&models.Tag{}).Error
 }
 
-func (t *tagRepository) GetTags(offset, pageSize int, tagName string) (tags []models.Tag) {
-	query := global.DB.Where("tag_status = ?", models.TAG_STATUS_NORMAL)
-	//pageSize := com.StrTo(os.Getenv("PAGESIZE")).MustInt()
-	//offset := (page - 1) * pageSize
+func (t *tagRepository) GetTags(offset, pageSize int, tagName string) (tags []models.Tag, total int) {
+	query := global.DB.Where("tag_status = ?", const_type.TAG_STATUS_NORMAL)
 
 	// 搜索
 	if tagName != "" {
-		query = query.Where("name like ?", "%"+tagName+"%")
+		query = query.Where("tag_name like ?", "%"+tagName+"%")
 	}
 
 	// 获取tag数据
+	//var tags []models.Tag
 	query.Offset(offset).Limit(pageSize).Find(&tags)
-	return
 
 	// 获取tag总数
-	//err2 := query.Model(&Tag{}).Count(&count).Error
-	//if err1 != nil || err2 != nil {
-	//	return []Tag{}, 0
-	//}
-	//return
+	//var total int
+	query.Model(&models.Tag{}).Count(&total)
+	return
 }

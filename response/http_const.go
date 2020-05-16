@@ -3,8 +3,13 @@ package response
 const (
 	Fail = -1
 	Ok = 0
+
+	// 标签
 	TAG_CREATED_FAILED = 601
 	TAG_UPDATE_FAILED = 602
 	TAG_NOT_FOUND = 603
 	TAG_DELETE_FAILED = 604
+
+	// 文章
+	ARTICLE_CREATED_FAILED = 605
 )

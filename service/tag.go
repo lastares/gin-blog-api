@@ -67,8 +67,8 @@ func (t *tagService) Delete(tagId int) int {
 }
 
 // 标签列表
-func (t *tagService) TagList(page, pageSize int, tagName string) []models.Tag {
+func (t *tagService) TagList(page, pageSize int, tagName string) ([]models.Tag, int) {
 	offset := (page - 1) * pageSize
-	tags := repository.Tag.GetTags(offset, pageSize, tagName)
-	return tags
+	tags, total := repository.Tag.GetTags(offset, pageSize, tagName)
+	return tags, total
 }

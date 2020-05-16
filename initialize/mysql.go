@@ -31,6 +31,10 @@ func MySQL() {
 		logrus.Error("Database connection failed, ", err)
 		os.Exit(0)
 	}
+
+	// sql 调试模式
+	global.DB.LogMode(true)
+
 	// 设置table不是负数形式
 	global.DB.SingularTable(true)
 	// 表前缀

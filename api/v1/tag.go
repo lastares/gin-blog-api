@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-gin-blog-api/form_request"
 	"go-gin-blog-api/global"
-	"go-gin-blog-api/models/request"
+	"go-gin-blog-api/models/form_validate"
 	"go-gin-blog-api/response"
 	"go-gin-blog-api/service"
 	"net/http"
@@ -19,7 +19,7 @@ import (
 // @Success 200 {object} models.Tag
 // @Failure 500 {object} http.Failed
 func GetTags(c *gin.Context) {
-	var tagList request.TagListForm
+	var tagList form_validate.TagListForm
 	c.BindJSON(&tagList)
 	err := global.Validate.Struct(tagList)
 	if err != nil {
@@ -27,18 +27,17 @@ func GetTags(c *gin.Context) {
 		return
 	}
 
-	tags := service.Tag.TagList(
+	tags, total := service.Tag.TagList(
 		tagList.Page,
 		tagList.PageSize,
 		tagList.TagName,
 	)
-	// todo 总数待写
-	response.ResponseSuccessJson(c, tags, 100)
+	response.ResponseSuccessJson(c, tags, total)
 }
 
 // 添加文章标签
 func TagCreate(c *gin.Context) {
-	var tag request.TagCreateModel
+	var tag form_validate.TagCreateModel
 	c.BindJSON(&tag)
 	err := global.Validate.Struct(tag)
 	if err != nil {
@@ -56,7 +55,7 @@ func TagCreate(c *gin.Context) {
 // 编辑文章标签
 func TagUpdate(c *gin.Context) {
 	// 字段校验
-	var tag request.TagUpdateModel
+	var tag form_validate.TagUpdateModel
 	c.BindJSON(&tag)
 	err := global.Validate.Struct(tag)
 	if err != nil {
@@ -80,7 +79,7 @@ func TagUpdate(c *gin.Context) {
 // 删除标签
 func TagDelete(c *gin.Context) {
 	// 字段校验
-	var tag request.TagDeleteModel
+	var tag form_validate.TagDeleteModel
 	c.BindJSON(&tag)
 	err := global.Validate.Struct(tag)
 	if err != nil {
