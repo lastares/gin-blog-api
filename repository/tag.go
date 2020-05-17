@@ -36,7 +36,7 @@ func (t *tagRepository) Delete(id int) error {
 }
 
 func (t *tagRepository) GetTags(offset, pageSize int, tagName string) (tags []models.Tag, total int) {
-	query := global.DB.Where("tag_status = ?", const_type.TAG_STATUS_NORMAL)
+	query := global.DB.Where("tag_status = ?", models.TAG_STATUS_NORMAL)
 
 	// 搜索
 	if tagName != "" {

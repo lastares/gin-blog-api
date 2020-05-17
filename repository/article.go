@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"go-gin-blog-api/global"
 	"go-gin-blog-api/models"
-	"go-gin-blog-api/models/const_type"
 	"go-gin-blog-api/models/read_model"
 )
 
@@ -34,8 +33,9 @@ func (t *articleRepository) ReplaceAssocTags(article *models.Article, tags []mod
 }
 
 // 删除文章附件级联关系
-func (t *articleRepository) DeleteAssocAttachment(article *models.Article) error {
-	return global.DB.Model(&article).Association("ArticleAttachments").Replace(&article.ArticleAttachments).Error
+func (t *articleRepository) DeleteAssocAttachment(articleId int) error {
+	return global.DB.Delete(models.ArticleAttachment{}, "article_id = ?", articleId).Error
+	//return global.DB.Model(&article).Association("ArticleAttachments").Replace(&article.ArticleAttachments).Error
 }
 
 // 根据主键获取标签
@@ -59,7 +59,7 @@ func (t *articleRepository) ArticleList(params map[string]interface{}) ([]read_m
 	var articles []read_model.Article
 	global.DB.Model(articles).
 		Preload("Tags").
-		Where("current_status = ?", const_type.ARTICLE_STATUS_NORMAL).
+		Where("current_status = ?", models.ARTICLE_STATUS_NORMAL).
 		Offset(params["offset"]).
 		Limit(params["pageSize"]).
 		Order("created_at desc").
@@ -67,6 +67,6 @@ func (t *articleRepository) ArticleList(params map[string]interface{}) ([]read_m
 		Find(&articles)
 
 	var total int
-	global.DB.Model(articles).Where("current_status = ?", const_type.ARTICLE_STATUS_NORMAL).Model(&read_model.Article{}).Count(&total)
+	global.DB.Model(articles).Where("current_status = ?", models.ARTICLE_STATUS_NORMAL).Model(&read_model.Article{}).Count(&total)
 	return articles, total
 }

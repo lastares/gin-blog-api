@@ -1,16 +1,13 @@
 package models
 
-import (
-	"go-gin-blog-api/util"
-	"time"
+import "go-gin-blog-api/util"
+
+
+const (
+	TAG_STATUS_NORMAL = 10
+	TAG_STATUS_LOCK = 20
 )
-type ArticleTag struct {
-	Id        int `gorm:"column:id;primary_key"`
-	ArticleId int `gorm:"column:article_id;index"`
-	TagId     int `gorm:"column:tag_id;index"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-}
+
 
 // Tag example
 // 标签

@@ -1,8 +1,6 @@
 package service
 
 import (
-	"fmt"
-	"github.com/sirupsen/logrus"
 	"go-gin-blog-api/models"
 	"go-gin-blog-api/models/form_validate"
 	"go-gin-blog-api/models/read_model"
@@ -16,8 +14,7 @@ func newArticleService() *articleService {
 	return &articleService{}
 }
 
-type articleService struct {
-}
+type articleService struct {}
 
 // 添加文章（标签信息关联插入)
 func (t *articleService) Create(articleCreateData form_validate.ArticleCreateForm) int {
@@ -27,7 +24,7 @@ func (t *articleService) Create(articleCreateData form_validate.ArticleCreateFor
 	article.SetContent(articleCreateData.Content)
 	article.SetCurrentStatus(articleCreateData.CurrentStatus)
 	article.SetTags(articleCreateData.TagIds)
-	article.SetAttachments(articleCreateData.Attachments, 0)
+	article.SetAttachments(articleCreateData.Attachments)
 	err := repository.Article.Create(&article)
 	if err != nil {
 		return response.ARTICLE_CREATE_FAILED
@@ -49,7 +46,7 @@ func (t *articleService) Update(articleUpdateData form_validate.ArticleUpdateFor
 	article.SetContent(articleUpdateData.Content)
 	article.SetCurrentStatus(articleUpdateData.CurrentStatus)
 	article.SetTags(articleUpdateData.TagIds)
-	article.SetAttachments(articleUpdateData.Attachments, articleUpdateData.Id)
+	article.SetAttachments(articleUpdateData.Attachments)
 
 	// 替换文章与标签的对应关系
 	err := repository.Article.ReplaceAssocTags(&article, article.GetTags())
@@ -58,9 +55,7 @@ func (t *articleService) Update(articleUpdateData form_validate.ArticleUpdateFor
 	}
 
 	// 替换文章与附件的对应关系ReplaceAssocAttachment
-	logrus.Errorf("info: %v", article.ArticleAttachments)
-	err = repository.Article.DeleteAssocAttachment(&article)
-	fmt.Println("错误", err.Error())
+	err = repository.Article.DeleteAssocAttachment(article.Id)
 	if err != nil {
 		return response.ARTICLE_REPLACE_ASSOCIATION_ATTACHMENT_FAILED
 	}
