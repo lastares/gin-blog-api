@@ -14,3 +14,12 @@ type Tag struct {
 	TagName   string        `json:"tagName" gorm:"column:tag_name"`
 	TagStatus int           `json:"tagStatus" gorm:"column:tag_status"`
 }
+
+func (article *Article) Set(tagIds []int) *Article {
+	var tags []Tag
+	for _, tagId := range tagIds {
+		tags = append(tags, Tag{Id: tagId})
+	}
+	article.Tags = tags
+	return article
+}

@@ -27,7 +27,9 @@ func InitRouter(engine *gin.Engine) *gin.Engine {
 
 		// 文章
 		apiV1.POST("/article/create", v1.ArticleCreate)
+		apiV1.POST("/article/update", v1.ArticleUpdate)
 		apiV1.POST("/article/list", v1.ArticleList)
+		apiV1.POST("/article/delete", v1.ArticleDelete)
 
 	}
 	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

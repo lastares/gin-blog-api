@@ -1,14 +1,12 @@
 package v1
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-gin-blog-api/form_request"
 	"go-gin-blog-api/global"
 	"go-gin-blog-api/models/form_validate"
 	"go-gin-blog-api/response"
 	"go-gin-blog-api/service"
-	"net/http"
 )
 
 // 添加文章
@@ -21,14 +19,32 @@ func ArticleCreate(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(article)
-	errorCode := service.Article.CreateArticle(
-		article.Title,
-		article.Content,
-		article.CurrentStatus,
-		article.TagIds,
-	)
-	if errorCode != http.StatusOK {
+	errorCode := service.Article.Create(article)
+	if errorCode != response.Ok {
+		response.InvalidOperation(c, errorCode)
+		return
+	}
+	response.Success(c)
+}
+
+// 更新文章
+func ArticleUpdate(c *gin.Context) {
+	var article form_validate.ArticleUpdateForm
+	c.BindJSON(&article)
+	err := global.Validate.Struct(article)
+	if err != nil {
+		form_request.ValidFailed(c, err)
+		return
+	}
+	errorCode := service.Article.Update(article)
+		//article.Id,
+		//article.CurrentStatus,
+		//article.Content,
+		//article.Title,
+		//article.TagIds,
+		//article.Attachments,
+	//)
+	if errorCode != response.Ok {
 		response.InvalidOperation(c, errorCode)
 		return
 	}
@@ -44,7 +60,6 @@ func ArticleList(c *gin.Context) {
 		form_request.ValidFailed(c, err)
 		return
 	}
- fmt.Println(articleList)
 	articles, total := service.Article.ArticleList(
 		articleList.Page,
 		articleList.PageSize,
@@ -52,3 +67,24 @@ func ArticleList(c *gin.Context) {
 	)
 	response.ResponseSuccessJson(c, articles, total)
 }
+
+// 文章删除
+func ArticleDelete(c *gin.Context) {
+	// 字段校验
+	var article form_validate.ArticleDeleteForm
+	c.BindJSON(&article)
+	err := global.Validate.Struct(article)
+	if err != nil {
+		form_request.ValidFailed(c, err)
+		return
+	}
+
+	// 删除
+	errorCode := service.Article.Delete(article.Id)
+	if errorCode != response.Ok {
+		response.InvalidOperation(c, errorCode)
+		return
+	}
+	response.Success(c)
+}
+
