@@ -15,7 +15,16 @@ type Tag struct {
 	Id        int           `json:"id" gorm:"column:id;primary_key"`
 	TagName   string        `json:"tagName" gorm:"column:tag_name"`
 	TagStatus int           `json:"tagStatus" gorm:"column:tag_status"`
-	Articles  []Article     `json:"articles" gorm:"many2many:article_tag;"`
 	CreatedAt util.JSONTime `json:"createdAt" gorm:"column:created_at"`
 	UpdatedAt util.JSONTime `json:"updatedAt" gorm:"column:updated_at"`
+}
+
+func (tag *Tag) SetTagName(tagName string) *Tag {
+	tag.TagName = tagName
+	return tag
+}
+
+func (tag *Tag) SetTagStatus(tagStatus int) *Tag {
+	tag.TagStatus = tagStatus
+	return tag
 }

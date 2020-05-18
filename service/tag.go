@@ -17,11 +17,11 @@ type tagService struct {
 }
 
 func (t *tagService) Create(tagName string, tagStatus int) int {
-	tag := &models.Tag{
-		TagName: tagName,
-		TagStatus: tagStatus,
-	}
-	err := repository.Tag.Create(tag)
+	var tag models.Tag
+	tag.SetTagName(tagName)
+	tag.SetTagStatus(tagStatus)
+
+	err := repository.Tag.Create(&tag)
 	if err != nil {
 		return response.TAG_CREATED_FAILED
 	}
@@ -32,18 +32,16 @@ func (t *tagService) Create(tagName string, tagStatus int) int {
 // 标签更新
 func (t *tagService) Update(tagId, tagStatus int, tagName string) int {
 	// 密等
-	getError := repository.Tag.Get(tagId)
-	if getError != nil {
+	tag := repository.Tag.Get(tagId)
+	if tag.Id == 0 {
 		return response.TAG_NOT_FOUND
 	}
 
 	// 更新
-	tag := &models.Tag{
-		Id: tagId,
-		TagName: tagName,
-		TagStatus: tagStatus,
-	}
-	err := repository.Tag.Update(tag)
+	tag.SetTagName(tagName)
+	tag.SetTagStatus(tagStatus)
+
+	err := repository.Tag.Update(&tag)
 	if err != nil {
 		return response.TAG_UPDATE_FAILED
 	}
@@ -53,8 +51,8 @@ func (t *tagService) Update(tagId, tagStatus int, tagName string) int {
 // 标签删除
 func (t *tagService) Delete(tagId int) int {
 	// 密等
-	getError := repository.Tag.Get(tagId)
-	if getError != nil {
+	tag := repository.Tag.Get(tagId)
+	if tag.Id == 0 {
 		return response.TAG_NOT_FOUND
 	}
 

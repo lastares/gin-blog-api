@@ -3,7 +3,6 @@ package repository
 import (
 	"go-gin-blog-api/global"
 	"go-gin-blog-api/models"
-	"go-gin-blog-api/models/const_type"
 )
 
 var Tag = newTagRepository()
@@ -26,8 +25,10 @@ func (t *tagRepository) Update(tag *models.Tag) error {
 }
 
 // 根据主键获取标签
-func (t *tagRepository) Get(id int) error {
-	return global.DB.First(&models.Tag{}, id).Error
+func (t *tagRepository) Get(id int) (tag models.Tag) {
+	global.DB.First(&tag, id).Scan(&tag)
+	return
+	//return global.DB.First(&models.Tag{}, id).Error
 }
 
 // 删除标签
