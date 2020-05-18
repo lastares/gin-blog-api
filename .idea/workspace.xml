@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2eeb5ae8-1cf9-42f8-a364-787844d6bb43" name="Default Changelist" comment="增加服务启动配置优化、支持平滑重启">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Tag.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/Tag.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/repository/tag.go" beforeDir="false" afterPath="$PROJECT_DIR$/repository/tag.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/tag.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/tag.go" afterDir="false" />
     </list>
@@ -66,7 +65,7 @@
         <counts>
           <entry key="env" value="108" />
           <entry key="gitignore" value="12" />
-          <entry key="go" value="19761" />
+          <entry key="go" value="19777" />
           <entry key="ini" value="39" />
           <entry key="md" value="288" />
           <entry key="mod" value="169" />
@@ -77,7 +76,7 @@
         <counts>
           <entry key=".env file" value="50" />
           <entry key="DTD" value="169" />
-          <entry key="Go" value="19761" />
+          <entry key="Go" value="19777" />
           <entry key="PLAIN_TEXT" value="457" />
         </counts>
       </usages-collector>
@@ -99,20 +98,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/service/tag.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="39">
-              <caret line="54" column="18" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
+            <state relative-caret-position="227">
+              <caret line="59" column="29" lean-forward="true" selection-start-line="59" selection-start-column="29" selection-end-line="59" selection-end-column="29" />
+              <folding>
+                <element signature="e#17#123#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/repository/tag.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="29" column="10" lean-forward="true" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
+            <state relative-caret-position="302">
+              <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -236,8 +238,8 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/models/Tag.go" />
         <option value="$PROJECT_DIR$/repository/article.go" />
-        <option value="$PROJECT_DIR$/repository/tag.go" />
         <option value="$PROJECT_DIR$/service/tag.go" />
+        <option value="$PROJECT_DIR$/repository/tag.go" />
       </list>
     </option>
   </component>
@@ -377,13 +379,13 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1695279" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1695279" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32961586" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49928468" visible="true" weight="0.26517966" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49928468" visible="true" weight="0.1833953" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -720,13 +722,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/repository/tag.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="29" column="10" lean-forward="true" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/service/article.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-187">
@@ -736,8 +731,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/service/tag.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="54" column="18" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
+        <state relative-caret-position="227">
+          <caret line="59" column="29" lean-forward="true" selection-start-line="59" selection-start-column="29" selection-end-line="59" selection-end-column="29" />
+          <folding>
+            <element signature="e#17#123#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repository/tag.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
         </state>
       </provider>
     </entry>

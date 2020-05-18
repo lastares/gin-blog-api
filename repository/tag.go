@@ -28,12 +28,11 @@ func (t *tagRepository) Update(tag *models.Tag) error {
 func (t *tagRepository) Get(id int) (tag models.Tag) {
 	global.DB.First(&tag, id).Scan(&tag)
 	return
-	//return global.DB.First(&models.Tag{}, id).Error
 }
 
 // 删除标签
-func (t *tagRepository) Delete(id int) error {
-	return global.DB.Where("id = ?", id).Delete(&models.Tag{}).Error
+func (t *tagRepository) Delete(tag models.Tag) error {
+	return global.DB.Delete(&tag).Error
 }
 
 func (t *tagRepository) GetTags(offset, pageSize int, tagName string) (tags []models.Tag, total int) {
@@ -45,11 +44,9 @@ func (t *tagRepository) GetTags(offset, pageSize int, tagName string) (tags []mo
 	}
 
 	// 获取tag数据
-	//var tags []models.Tag
 	query.Offset(offset).Limit(pageSize).Find(&tags)
 
 	// 获取tag总数
-	//var total int
 	query.Model(&models.Tag{}).Count(&total)
 	return
 }

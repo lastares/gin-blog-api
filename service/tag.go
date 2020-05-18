@@ -57,7 +57,7 @@ func (t *tagService) Delete(tagId int) int {
 	}
 
 	// 删除
-	err := repository.Tag.Delete(tagId)
+	err := repository.Tag.Delete(tag)
 	if err != nil {
 		return response.TAG_DELETE_FAILED
 	}
