@@ -7,5 +7,4 @@ type ArticleAttachment struct {
 	AttachmentPath string        `json:"attachment_path" gorm:"column:attachment_path"`
 	ArticleId      int           `json:"articleId" gorm:"index"`
 	CreatedAt      util.JSONTime `json:"createdAt" gorm:"column:created_at"`
-	UpdatedAt      util.JSONTime `json:"updatedAt" gorm:"column:updated_at"`
 }

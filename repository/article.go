@@ -59,6 +59,7 @@ func (t *articleRepository) ArticleList(params map[string]interface{}) ([]read_m
 	var articles []read_model.Article
 	global.DB.Model(articles).
 		Preload("Tags").
+		Preload("ArticleAttachments").
 		Where("current_status = ?", models.ARTICLE_STATUS_NORMAL).
 		Offset(params["offset"]).
 		Limit(params["pageSize"]).

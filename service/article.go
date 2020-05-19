@@ -25,6 +25,7 @@ func (t *articleService) Create(articleCreateData form_validate.ArticleCreateFor
 	article.SetCurrentStatus(articleCreateData.CurrentStatus)
 	article.SetTags(articleCreateData.TagIds)
 	article.SetAttachments(articleCreateData.Attachments)
+
 	err := repository.Article.Create(&article)
 	if err != nil {
 		return response.ARTICLE_CREATE_FAILED

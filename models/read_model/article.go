@@ -1,11 +1,14 @@
 package read_model
 
+import "go-gin-blog-api/models"
+
 type Article struct {
 	Id            int           `json:"id" gorm:"column:id;primary_key"`
 	Title         string        `json:"title" gorm:"column:title"`
 	Content       string        `json:"content" gorm:"column:content"`
 	CurrentStatus int           `json:"currentStatus" gorm:"column:current_status"`
 	Tags          []Tag  `json:"tags" gorm:"many2many:article_tag"`
+	ArticleAttachments []models.ArticleAttachment `json:"articleAttachments" gorm:"foreignkey:ArticleId;AssociationForeignKey:Id"`
 }
 
 // 标签
