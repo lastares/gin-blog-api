@@ -16,6 +16,8 @@ func Gin() {
 	// 设置gin的运行模式
 	gin.SetMode(gin.DebugMode)
 
+	//global.Gin.Use(middleware.Logger())
+
 	// 加载路由
 	routers.InitRouter(global.Gin)
 

@@ -10,6 +10,7 @@ type ResponseJson struct {
 	Meta Meta `json:"meta"`
 }
 
+// Failed example
 type Failed struct {
 	Code int    `json:"code" example:"-1"`
 	Msg  string `json:"msg" example:"failed"`

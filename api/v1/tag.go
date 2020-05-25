@@ -11,13 +11,15 @@ import (
 )
 
 // @Summary 获取标签列表
-// @Tags Tag
+// @Produce  json
+// @Accept  json
 // @Produce  json
 // @Router /tags [post]
-// @Param page formData int false "当前页码"
-// @Param pageSize formData int false "每页显示条数"
-// @Success 200 {object} models.Tag
-// @Failure 500 {object} http.Failed
+// @Param tagName body string false "标签名称"
+// @Param page body int true "当前页码"
+// @Param pageSize body int true "每页显示条数"
+// @Success 200 {object} docs.TagListDTO
+// @Failure 500 {object} response.Failed
 func GetTags(c *gin.Context) {
 	var tagList form_validate.TagListForm
 	c.BindJSON(&tagList)

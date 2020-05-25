@@ -37,13 +37,6 @@ func ArticleUpdate(c *gin.Context) {
 		return
 	}
 	errorCode := service.Article.Update(article)
-		//article.Id,
-		//article.CurrentStatus,
-		//article.Content,
-		//article.Title,
-		//article.TagIds,
-		//article.Attachments,
-	//)
 	if errorCode != response.Ok {
 		response.InvalidOperation(c, errorCode)
 		return
@@ -54,7 +47,7 @@ func ArticleUpdate(c *gin.Context) {
 // 文章列表
 func ArticleList(c *gin.Context) {
 	var articleList form_validate.ArticleListForm
-	c.BindJSON(&articleList)
+	c.ShouldBindJSON(&articleList)
 	err := global.Validate.Struct(articleList)
 	if err != nil {
 		form_request.ValidFailed(c, err)

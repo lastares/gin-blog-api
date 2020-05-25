@@ -20,11 +20,12 @@ type articleService struct {}
 func (t *articleService) Create(articleCreateData form_validate.ArticleCreateForm) int {
 	// 文章信息
 	var article models.Article
-	article.SetTitle(articleCreateData.Title)
-	article.SetContent(articleCreateData.Content)
-	article.SetCurrentStatus(articleCreateData.CurrentStatus)
-	article.SetTags(articleCreateData.TagIds)
-	article.SetAttachments(articleCreateData.Attachments)
+	article.
+		SetTitle(articleCreateData.Title).
+		SetContent(articleCreateData.Content).
+		SetCurrentStatus(articleCreateData.CurrentStatus).
+		SetTags(articleCreateData.TagIds).
+		SetAttachments(articleCreateData.Attachments)
 
 	err := repository.Article.Create(&article)
 	if err != nil {
@@ -43,11 +44,11 @@ func (t *articleService) Update(articleUpdateData form_validate.ArticleUpdateFor
 	}
 
 	// 文章信息
-	article.SetTitle(articleUpdateData.Title)
-	article.SetContent(articleUpdateData.Content)
-	article.SetCurrentStatus(articleUpdateData.CurrentStatus)
-	article.SetTags(articleUpdateData.TagIds)
-	article.SetAttachments(articleUpdateData.Attachments)
+	article.SetTitle(articleUpdateData.Title).
+		SetContent(articleUpdateData.Content).
+		SetCurrentStatus(articleUpdateData.CurrentStatus).
+		SetTags(articleUpdateData.TagIds).
+		SetAttachments(articleUpdateData.Attachments)
 
 	// 替换文章与标签的对应关系
 	err := repository.Article.ReplaceAssocTags(&article, article.GetTags())

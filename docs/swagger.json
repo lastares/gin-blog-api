@@ -11,25 +11,40 @@
     "paths": {
         "/tags": {
             "post": {
-                "produces": [
+                "consumes": [
                     "application/json"
                 ],
-                "tags": [
-                    "Tag"
+                "produces": [
+                    "application/json",
+                    "application/json"
                 ],
                 "summary": "获取标签列表",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "当前页码",
-                        "name": "page",
-                        "in": "formData"
+                        "description": "标签名称",
+                        "name": "tagName",
+                        "in": "body",
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "type": "integer",
+                        "description": "当前页码",
+                        "name": "page",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "description": "每页显示条数",
                         "name": "pageSize",
-                        "in": "formData"
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -42,7 +57,7 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/http.Failed"
+                            "$ref": "#/definitions/response.Failed"
                         }
                     }
                 }
@@ -50,7 +65,29 @@
         }
     },
     "definitions": {
-        "http.Failed": {
+        "models.Tag": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "object",
+                    "$ref": "#/definitions/util.JSONTime"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "tagName": {
+                    "type": "string"
+                },
+                "tagStatus": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "object",
+                    "$ref": "#/definitions/util.JSONTime"
+                }
+            }
+        },
+        "response.Failed": {
             "type": "object",
             "properties": {
                 "code": {
@@ -60,34 +97,6 @@
                 "msg": {
                     "type": "string",
                     "example": "failed"
-                }
-            }
-        },
-        "models.Tag": {
-            "type": "object",
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "createdAt": {
-                    "type": "object",
-                    "$ref": "#/definitions/util.JSONTime"
-                },
-                "id": {
-                    "type": "integer",
-                    "example": 10
-                },
-                "tagName": {
-                    "type": "string",
-                    "example": "php"
-                },
-                "tagStatus": {
-                    "type": "integer",
-                    "example": 10
-                },
-                "updatedAt": {
-                    "type": "object",
-                    "$ref": "#/definitions/util.JSONTime"
                 }
             }
         },

@@ -1,6 +1,21 @@
 basePath: /api/v1/
 definitions:
-  http.Failed:
+  models.Tag:
+    properties:
+      createdAt:
+        $ref: '#/definitions/util.JSONTime'
+        type: object
+      id:
+        type: integer
+      tagName:
+        type: string
+      tagStatus:
+        type: integer
+      updatedAt:
+        $ref: '#/definitions/util.JSONTime'
+        type: object
+    type: object
+  response.Failed:
     properties:
       code:
         example: -1
@@ -8,26 +23,6 @@ definitions:
       msg:
         example: failed
         type: string
-    type: object
-  models.Tag:
-    properties:
-      createdAt:
-        $ref: '#/definitions/util.JSONTime'
-        type: object
-      id:
-        example: 10
-        type: integer
-      tagName:
-        example: php
-        type: string
-      tagStatus:
-        example: 10
-        type: integer
-      updatedAt:
-        $ref: '#/definitions/util.JSONTime'
-        type: object
-    required:
-    - id
     type: object
   util.JSONTime:
     type: object
@@ -40,16 +35,28 @@ info:
 paths:
   /tags:
     post:
+      consumes:
+      - application/json
       parameters:
+      - description: 标签名称
+        in: body
+        name: tagName
+        schema:
+          type: string
       - description: 当前页码
-        in: formData
+        in: body
         name: page
-        type: integer
+        required: true
+        schema:
+          type: integer
       - description: 每页显示条数
-        in: formData
+        in: body
         name: pageSize
-        type: integer
+        required: true
+        schema:
+          type: integer
       produces:
+      - application/json
       - application/json
       responses:
         "200":
@@ -59,8 +66,6 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/http.Failed'
+            $ref: '#/definitions/response.Failed'
       summary: 获取标签列表
-      tags:
-      - Tag
 swagger: "2.0"

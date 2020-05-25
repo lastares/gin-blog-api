@@ -18,8 +18,7 @@ type tagService struct {
 
 func (t *tagService) Create(tagName string, tagStatus int) int {
 	var tag models.Tag
-	tag.SetTagName(tagName)
-	tag.SetTagStatus(tagStatus)
+	tag.SetTagName(tagName).SetTagStatus(tagStatus)
 
 	err := repository.Tag.Create(&tag)
 	if err != nil {
@@ -38,8 +37,7 @@ func (t *tagService) Update(tagId, tagStatus int, tagName string) int {
 	}
 
 	// 更新
-	tag.SetTagName(tagName)
-	tag.SetTagStatus(tagStatus)
+	tag.SetTagName(tagName).SetTagStatus(tagStatus)
 
 	err := repository.Tag.Update(&tag)
 	if err != nil {
